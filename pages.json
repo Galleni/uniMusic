@@ -21,12 +21,21 @@
 		}, {
 			"path": "pages/mine/mine",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
+
 			}
 		}, {
 			"path": "pages/cloud/cloud",
 			"style": {
-				"navigationBarTitleText": "云村"
+				"navigationBarTitleText": "云村",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleNView": false
+				}
 			}
 		}, {
 			"path": "pages/account/account",
