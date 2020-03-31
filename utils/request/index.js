@@ -1,7 +1,7 @@
 import Request from './request.js'
 
 // need to change baseUrl
-const baseUrl = process.env.NODE_ENV === 'development' ? "https://www.fastmock.site/mock/848517155615356f2cbfc0d935619ba9/axios" : "http://localhost:8081/v1/api"
+const baseUrl = process.env.NODE_ENV === 'development' ? "https://www.gzamon.wang/api/" : "http://localhost:8080/v1/api" //https://www.fastmock.site/mock/1a868a9d304d8441401ce63a74bbe3e6/axios"
 
 const config = {
 	baseUrl: baseUrl
@@ -52,11 +52,11 @@ const req = new Request(config, reqInterceptor, resInterceptor)
 // request log
 function _requestLog(req, describe = null) {
 	if (process.env.NODE_ENV === 'development') {
-		console.log("地址：" + req.url)
+		// console.log("地址：" + req.url)
 		if (describe) {
-			console.log("描述：" + describe)
+			// console.log("描述：" + describe)
 		}
-		console.log("详细：" + JSON.stringify(req))
+		// console.log("详细：" + JSON.stringify(req))
 	}
 	//TODO into log server
 }
@@ -65,11 +65,11 @@ function _requestLog(req, describe = null) {
 function _responseLog(res, conf = {}, describe = null) {
 	let _statusCode = res.statusCode;
 	if (process.env.NODE_ENV === 'development') {
-		console.log("地址: " + conf.url)
+		// console.log("地址: " + conf.url)
 		if (describe) {
-			console.log("描述：" + describe)
+			// console.log("描述：" + describe)
 		}
-		console.log("结果: " + JSON.stringify(res))
+		// console.log("结果: " + JSON.stringify(res))
 	}
 	//TODO into log server
 	if (_statusCode === 500) {
