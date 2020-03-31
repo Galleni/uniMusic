@@ -3,7 +3,7 @@ page {
 	line-height: 1.5;
 	color: #2c3e50;
 	background: #fff;
-	font-family: 'PingFang-SC-Medium';
+	-webkit-overflow-scrolling: touch; /*使iOS列表滑动流畅*/
 }
 
 button {
@@ -96,7 +96,6 @@ button:after {
 .line-item {
 	background: #fff;
 	padding-left: 30rpx;
-	padding-right: 65rpx;
 	color: #666;
 	line-height: 100rpx;
 	font-size: 27rpx;
@@ -109,8 +108,8 @@ button:after {
 			top: 50rpx;
 			width: 15rpx;
 			height: 15rpx;
-			border-top: 3rpx solid #666;
-			border-right: 3rpx solid #666;
+			border-top: 3rpx solid #ccc;
+			border-right: 3rpx solid #ccc;
 			transform: rotate(45deg);
 		}
 	}
