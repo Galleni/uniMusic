@@ -3,15 +3,20 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "发现",// 状态栏标题，覆盖掉 globalStyle 中设置的标题
-				            "app-plus":{
-				                "titleNView": false //去掉h5对应页面的导航栏
-				            }
+				"navigationBarTitleText": "发现", // 状态栏标题，覆盖掉 globalStyle 中设置的标题
+				"app-plus": {
+					"titleNView": false //去掉h5对应页面的导航栏
+				}
 			}
 		}, {
 			"path": "pages/video/video",
 			"style": {
-				"navigationBarTitleText": "视频"
+				"navigationBarTitleText": "视频",
+				"app-plus": {
+					"titleNView": false,
+					"bounce": "none", // 取消 ios 回弹，避免和下拉刷新冲突
+					"disableScroll": true // Android小程序卡顿
+				}
 			}
 		}, {
 			"path": "pages/mine/mine",
@@ -31,10 +36,10 @@
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",// 导航栏标题颜色及状态栏前景颜色，仅支持 black/white
-		"navigationBarTitleText": "网易云音乐uni",// 导航栏标题文字内容
+		"navigationBarTextStyle": "black", // 导航栏标题颜色及状态栏前景颜色，仅支持 black/white
+		"navigationBarTitleText": "网易云音乐uni", // 导航栏标题文字内容
 		"navigationBarBackgroundColor": "#F8F8F8", // 导航栏背景颜色（同状态栏背景色）
-		"backgroundColor": "#F8F8F8",// 窗口的背景色
+		"backgroundColor": "#F8F8F8", // 窗口的背景色
 		"navigationStyle": "custom"
 	},
 	"tabBar": {
