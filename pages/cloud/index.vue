@@ -93,7 +93,7 @@
 					{ name: '动态', id: 3462},
 				],
 				dateMsg: {
-					curDate: [],
+					curDate: String(new Date()).split(' '),
 					msgList: [
 						{ name: '他是我见过最年少有为的人', id: ''},
 						{ name: '因为一个人而失眠，这真的好吗', id: ''},
@@ -105,9 +105,10 @@
 			};
 		},
 		onLoad() {
-			let date = new Date()
-			this.dateMsg.curDate = String(date).split(' ')
 			this.switchTab(3245, 1)
+			
+			// 公共设置图标
+			this.$pubFuc.setTabBarBadge(3)
 		},
 		methods:{
 			// 标题栏切换
@@ -152,7 +153,6 @@
 			},
 			/*上拉加载的回调: mescroll携带page的参数, 其中num:当前页 从1开始, size:每页数据条数,默认10 */
 			upCallback(mescroll) {
-				console.log(mescroll.num, mescroll.size)
 				//联网加载数据
 				this.getList(mescroll.num, mescroll.size, (res) => {
 					//设置列表数据
@@ -207,7 +207,7 @@ page{
 	top: 64px;
 	left: 0;
 	right: 0;
-	bottom: 0px;
+	bottom: 0;
 	/* #ifdef H5 */
 	top:44px;  // h5 无状态栏
 	/* #endif */
@@ -312,4 +312,3 @@ page{
 	font-size: 24rpx;
 }
 </style>
-

@@ -2,10 +2,10 @@
 	<view class="song-list-comp">
 		<view class="tit-bar">
 			{{title}}
-			<navigator :url="link" class="more fr">歌单广场</navigator>
+			<view class="more fr">歌单广场</view>
 		</view>
 		<view class="clearfix">
-			<view class="item" v-for="(item, index) in list" :key="index">
+			<view class="item" v-for="(item, index) in list" :key="index" @click="goUrl(item)">
 				<image class="img" :src="item.picUrl + $imgSuffix"></image>
 				<view class="desc">{{item.name}}</view>
 				<view class="count">{{item.playCount}}</view>
@@ -37,7 +37,12 @@
 			return {}
 		},
 		methods:{
-			
+			// 跳转链接
+			goUrl (item) {
+				uni.navigateTo({
+					url: '/pages/subpages/index/album?id=' + item.id,
+				});
+			}
 		},
 		
 	}
@@ -84,9 +89,10 @@
 				border-radius: 10rpx;
 			}
 			.desc{
-				height:64rpx;
+				height:62rpx;
 				margin-top:12rpx;
 				line-height: 30rpx;
+				font-weight: 400;
 				overflow: hidden;
 			}
 			.count{

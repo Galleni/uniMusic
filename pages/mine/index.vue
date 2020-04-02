@@ -1,16 +1,13 @@
 <template>
 	<view>
-		<!-- 条件编译后只在 app 显示 或微信显示 -->
 		<!-- #ifdef APP-PLUS || MP-WEIXIN -->
 		<uni-nav-bar fixed :status-bar="true" title="我的音乐" @clickLeft="goCloud" @clickRight="goCloud">
 			<block slot="left"><image class="top-img left" src="/static/image/mine/l.png"></image></block>
-			<!-- 条件编译后只在 app 显示 -->
 			<!-- #ifdef APP-PLUS -->
 			<block slot="right"><image class="top-img" src="/static/image/mine/r.png"></image></block>
 			<!-- #endif -->
 		</uni-nav-bar>
 		<!-- #endif -->
-		<!-- 条件编译后只在 app 显示 或微信显示 -->
 		<!-- #ifdef APP-PLUS || MP-WEIXIN -->
 		<scroll-view scroll-y="true" class="page-content">
 			<!-- #endif -->
@@ -20,29 +17,20 @@
 					<view class="desc">{{ item.name }}</view>
 				</view>
 			</scroll-view>
-			<navigator class="line-item arrow clearfix mt16" hover-class="none" url="">
-				<image class="icon" src="/static/image/mine/m_15.png" mode="widthFix"></image>
-				<view class="con"><text class="lab">本地音乐</text></view>
-			</navigator>
-			<navigator class="line-item arrow clearfix mt16" hover-class="none" url="">
-				<image class="icon" src="/static/image/mine/m_17.png" mode="widthFix"></image>
-				<view class="con"><text class="lab">最近播放</text></view>
-			</navigator>
-			<navigator class="line-item arrow clearfix mt16" hover-class="none" url="">
-				<image class="icon" src="/static/image/mine/m_19.png" mode="widthFix"></image>
-				<view class="con"><text class="lab">我的电台</text></view>
-			</navigator>
-			<navigator class="line-item arrow clearfix mt16" hover-class="none" url="">
-				<image class="icon" src="/static/image/mine/m_21.png" mode="widthFix"></image>
-				<text class="lab">我的收藏</text>
-			</navigator>
+			<uni-list>
+				<uni-list-item title="本地音乐" thumb="/static/image/mine/m_15.png"/>
+				<uni-list-item title="最近播放" thumb="/static/image/mine/m_17.png"/>
+				<uni-list-item title="我的电台" thumb="/static/image/mine/m_19.png"/>
+				<uni-list-item title="我的收藏" thumb="/static/image/mine/m_21.png"/>
+			</uni-list>
 			<view class="recommend-list">
 				<!-- 歌单分类块 -->
-				<songList title="推荐歌单" :list="recommendSongs" />
+				<songList title="推荐歌单" :list="recommendSongs"/>
 			</view>
-			<!-- #ifdef APP-PLUS || MP-WEIXIN -->
+		<!-- #ifdef APP-PLUS || MP-WEIXIN -->
 		</scroll-view>
 		<!-- #endif -->
+		
 	</view>
 </template>
 
@@ -50,10 +38,14 @@
 import { apiGetNavList } from '@/apis/mine.js';
 import { apiGetRecommendSongs } from '@/apis/index.js';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
-import songList from '@/components/songList';
+import uniList from '@/components/uni-list/uni-list.vue'
+import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
+import songList from '@/components/songList'
 export default {
 	components: {
 		uniNavBar,
+		uniList,
+		uniListItem,
 		songList
 	},
 	data() {
@@ -68,12 +60,15 @@ export default {
 				{ name: '亲子频道', imd: 7 },
 				{ name: '古典专区', imd: 8 }
 			],
-			recommendSongs: []
+			recommendSongs: [],
 		};
 	},
 	onLoad() {
 		this.getNavList();
 		this.getRecommendSongs();
+		
+		// 公共设置图标
+		this.$pubFuc.setTabBarBadge(2)
 	},
 	methods: {
 		// 获取导航
@@ -98,25 +93,25 @@ export default {
 		getRecommendSongs() {
 			const params = {
 				limit: 6
-			};
+			}
 			apiGetRecommendSongs(params).then(res => {
 				// 格式化播放量数据
 				const formatCount = data => {
-					let tempNum = data;
+					let tempNum = data
 					if (data > 100000) {
-						tempNum = parseInt(data / 10000) + '万';
+						tempNum = (parseInt(data / 10000) + '万')
 					}
-
-					return tempNum;
-				};
-
-				this.recommendSongs = res.result;
-
+					
+					return tempNum
+				}
+				
+				this.recommendSongs = res.result
+				
 				this.recommendSongs.forEach(item => {
-					item.playCount = formatCount(item.playCount);
-				});
-			});
-		}
+					item.playCount = formatCount(item.playCount)
+				})
+			})
+		},
 	}
 };
 </script>
@@ -152,6 +147,7 @@ export default {
 		display: inline-block;
 		height: 210rpx;
 		width: 166rpx;
+		
 	}
 	.img {
 		display: block;
@@ -169,25 +165,25 @@ export default {
 		margin-top: 24rpx;
 		margin-right: 36rpx;
 	}
-	.lab {
+	.lab{
 		font-size: 32rpx;
-		color: #444;
+		color:#444;
 	}
-	.con {
-		position: relative;
-		height: 100rpx;
+	.con{
+		position:relative;
+		height:100rpx;
 		overflow: hidden;
-		&:before {
-			position: absolute;
-			content: '';
-			right: 0;
-			bottom: 0;
-			width: 100%;
+		&:before{
+			position:absolute;
+			content:"";
+			right:0;
+			bottom:0;
+			width:100%;
 			border-bottom: 1rpx solid #e6e6e6;
 		}
 	}
 }
-.recommend-list {
-	border-top: 16rpx solid #f8f8f8;
+.recommend-list{
+	border-top:16rpx solid #f8f8f8;
 }
 </style>

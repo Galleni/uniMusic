@@ -1,22 +1,32 @@
 import Request from './request.js'
+import store from '@/store/index.js'
 
 // need to change baseUrl
 // const baseUrl = process.env.NODE_ENV === 'development' ? "http://localhost:3000" : "http://122.51.183.19"
-// const baseUrl = process.env.NODE_ENV === 'development' ? "http://122.51.183.19" : "http://122.51.183.19"
+const baseUrl = process.env.NODE_ENV === 'development' ? "https://www.gzamon.wang/api/" : "http://122.51.183.19"
 
-var baseUrl = "https://www.gzamon.wang/api/"  
-// #ifdef APP-PLUS || MP-WEIXIN
-baseUrl = "http://122.51.183.19"
-// #endif
+// var baseUrl = "http://localhost:80"  
+// // #ifdef APP-PLUS || MP-WEIXIN
+// baseUrl = "http://122.51.183.19"
+// // #endif
 
 const config = {
 	baseUrl: baseUrl
 }
 
 const reqInterceptor = async (options) => {
-	uni.showLoading({
-	    title: '加载中...'
-	});
+	options.header = {  // 头部塞入token 进行验证
+		...options.header,
+		token: store.state.userInfo.token
+	}
+	
+	// 默认加载loading
+	if (!options.hideLoading) {
+		uni.showLoading({
+		    title: '加载中...'
+		});
+	}
+	
 	//TODO do your request interceptor, such as url/header config, token refresh...
 	_requestLog(options, "成功通过")
 	// return false will abort the request, and then reject a blank object {}

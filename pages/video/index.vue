@@ -93,6 +93,9 @@
 			// #ifdef H5
 			this.mescrollTop = 186
 			// #endif
+			
+			// 公共设置图标
+			this.$pubFuc.setTabBarBadge(1)
 		},
 		methods: {
 			// 获取导航

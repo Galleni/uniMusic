@@ -1,86 +1,133 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
+		{
+		    "path" : "pages/account/ad",
+		    "style" : {
+				"navigationBarTitleText": "广告页",
+				"navigationStyle": "custom",
+				"app-plus":{
+					"titleNView": false
+				}
+			}
+		},
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "发现", // 状态栏标题，覆盖掉 globalStyle 中设置的标题
-				"app-plus": {
-					"titleNView": false //去掉h5对应页面的导航栏
+				"navigationBarTitleText": "发现",
+				"navigationStyle": "custom",
+				"app-plus":{
+					"titleNView": false,
+					"bounce" : "none", // 取消iOS回弹,避免和下拉刷新冲突
+					"disableScroll": true,   // Android小程序卡顿 
+					"softinputNavBar": "none"
 				}
 			}
-		}, {
-			"path": "pages/video/video",
+		},{
+			"path": "pages/video/index",
 			"style": {
 				"navigationBarTitleText": "视频",
-				"app-plus": {
+				"navigationStyle": "custom",
+				"app-plus":{
 					"titleNView": false,
-					"bounce": "none", // 取消 ios 回弹，避免和下拉刷新冲突
-					"disableScroll": true // Android小程序卡顿
+					"bounce" : "none", // 取消iOS回弹,避免和下拉刷新冲突
+					"disableScroll": true,// Android小程序卡顿 
+					"softinputNavBar": "none"
 				}
 			}
 		}, {
-			"path": "pages/mine/mine",
+			"path": "pages/mine/index",
 			"style": {
 				"navigationBarTitleText": "我的",
 				"navigationStyle": "custom",
-				"app-plus": {
+				"app-plus":{
 					"titleNView": false
 				}
-
 			}
 		}, {
-			"path": "pages/cloud/cloud",
+			"path": "pages/cloud/index",
 			"style": {
 				"navigationBarTitleText": "云村",
+				"navigationStyle": "custom",
+				"app-plus":{
+					"titleNView": false,
+					"bounce" : "none", // 取消iOS回弹,避免和下拉刷新冲突
+					"disableScroll": true   // Android小程序卡顿 
+				}
+			}
+		}, {
+			"path": "pages/account/index",
+			"style": {
+				"navigationBarTitleText": "账号",
+				"navigationStyle": "custom",
+				"app-plus":{
+					"titleNView": false
+				}
+			}
+		}
+		
+    ],
+	"subPackages": [{
+		"root": "pages/subpages/index",
+		"pages": [{
+			"path": "album",
+			"style": {
+				"navigationBarTitleText": "歌单",
 				"navigationStyle": "custom",
 				"app-plus": {
 					"titleNView": false
 				}
 			}
-		}, {
-			"path": "pages/account/account",
-			"style": {
-				"navigationBarTitleText": "账号"
-			}
 		}
+		]},
+		{
+			"root": "pages/subpages/account",
+			"pages": [{
+				"path": "login",
+				"style": {
+					"navigationBarTitleText": "登录",
+					"app-plus": {
+						"titleNView": false
+					}
+				}
+			}
+		]}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black", // 导航栏标题颜色及状态栏前景颜色，仅支持 black/white
-		"navigationBarTitleText": "网易云音乐uni", // 导航栏标题文字内容
-		"navigationBarBackgroundColor": "#F8F8F8", // 导航栏背景颜色（同状态栏背景色）
-		"backgroundColor": "#F8F8F8", // 窗口的背景色
-		"navigationStyle": "custom"
+		"navigationBarTextStyle": "black",     // 导航栏标题颜色及状态栏前景颜色，仅支持 black/white
+		"navigationBarTitleText": "网易云音乐",   // 导航栏标题文字内容
+		"navigationBarBackgroundColor": "#F8F8F8",  // 导航栏背景颜色（同状态栏背景色）
+		"backgroundColor": "#F8F8F8" // 窗口的背景色
 	},
 	"tabBar": {
-		"color": "#888",
-		"selectedColor": "#ff2419",
-		"borderStyle": "white",
-		"backgroundColor": "#f9f9f9",
-		"list": [{
-			"pagePath": "pages/index/index",
-			"iconPath": "static/tab/t_1.png",
-			"selectedIconPath": "static/tab/t_11.png",
-			"text": "发现"
-		}, {
-			"pagePath": "pages/video/video",
-			"iconPath": "static/tab/t_2.png",
-			"selectedIconPath": "static/tab/t_21.png",
-			"text": "视频"
-		}, {
-			"pagePath": "pages/mine/mine",
-			"iconPath": "static/tab/t_3.png",
-			"selectedIconPath": "static/tab/t_31.png",
-			"text": "我的"
-		}, {
-			"pagePath": "pages/cloud/cloud",
-			"iconPath": "static/tab/t_4.png",
-			"selectedIconPath": "static/tab/t_41.png",
-			"text": "云村"
-		}, {
-			"pagePath": "pages/account/account",
-			"iconPath": "static/tab/t_5.png",
-			"selectedIconPath": "static/tab/t_51.png",
-			"text": "账号"
-		}]
-	}
+	        "color": "#888",
+	        "selectedColor": "#ff2419",
+	        "borderStyle": "white",
+	        "backgroundColor": "#f9f9f9",
+	        "list": [{
+	            "pagePath": "pages/index/index",
+	            "iconPath": "static/tab/t_1.png",
+	            "selectedIconPath": "static/tab/t_11.png",
+	            "text": "发现"
+	        }, {
+	            "pagePath": "pages/video/index",
+	            "iconPath": "static/tab/t_2.png",
+	            "selectedIconPath": "static/tab/t_21.png",
+	            "text": "视频"
+	        }, {
+	            "pagePath": "pages/mine/index",
+	            "iconPath": "static/tab/t_3.png",
+	            "selectedIconPath": "static/tab/t_31.png",
+	            "text": "我的"
+	        }, {
+	            "pagePath": "pages/cloud/index",
+	            "iconPath": "static/tab/t_4.png",
+	            "selectedIconPath": "static/tab/t_41.png",
+	            "text": "云村"
+	        }, {
+	            "pagePath": "pages/account/index",
+	            "iconPath": "static/tab/t_5.png",
+	            "selectedIconPath": "static/tab/t_51.png",
+	            "text": "账号"
+	        }]
+	    }
 }

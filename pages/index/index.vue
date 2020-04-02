@@ -40,7 +40,7 @@
 						</view>
 					</view>
 					<!-- 歌单分类块 -->
-					<songList title="推荐歌单" link="/pages/songSquare/index?limit=30" :list="recommendSongs" />
+					<songList title="推荐歌单" :list="recommendSongs" />
 					<!-- 歌单分类块 -->
 					<view class="song-list">
 						<view class="tit-bar">
@@ -48,11 +48,11 @@
 							<view class="more fr">歌单广场</view>
 						</view>
 						<scroll-view class="scroll-view" scroll-x>
-							<view class="item" v-for="(item, index) in recommendSongs" :key="index">
+							<navigator class="item" v-for="(item, index) in recommendSongs" :key="index" hover-class="none" :url="'/pages/subpages/index/album?id='+ item.id">
 								<image class="img" :src="item.picUrl + $imgSuffix"></image>
 								<view class="desc ellipsis">{{ item.name }}</view>
 								<view class="count">{{ item.playCount }}</view>
-							</view>
+							</navigator>
 						</scroll-view>
 					</view>
 					<!-- 歌单分类块 -->
@@ -97,9 +97,9 @@
 </template>
 <script>
 import { apiGetBanner, apiGetRecommendSongs, apiGetIndexData, apiGetTopAlbum, apiGetRelatedVideo, apiGetHotList } from '@/apis/index.js';
+import songList from '@/components/songList.vue';
 import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 import MescrollUni from '@/components/mescroll-uni/mescroll-uni.vue';
-import songList from '../../components/songList';
 import search from '@/components/search.vue';
 export default {
 	components: {
@@ -143,6 +143,9 @@ export default {
 		this.getHotList();
 
 		this.curDate = new Date().getDate();
+		
+		// 公共设置图标
+		this.$pubFuc.setTabBarBadge(0)
 	},
 	methods: {
 		// 获取轮播图
@@ -224,12 +227,6 @@ export default {
 				this.hotList = res.playlists;
 			});
 		},
-		// 跳转链接
-		goUrl(url) {
-			uni.navigateTo({
-				url: url
-			});
-		},
 		// 打开搜索
 		openSearch() {
 			this.isShowSearch = true;
@@ -265,8 +262,7 @@ export default {
 				icon: 'none',
 				title: '功能未开发',
 			});
-		}
-		
+		},
 	}
 };
 </script>
@@ -364,12 +360,12 @@ page {
 		position: relative;
 		.date {
 			position: absolute;
-			left: 60rpx;
+			left: 50%;
 			top: 40rpx;
 			line-height: 1;
 			font-size: 24rpx;
 			color: #ff392d;
-			transform: scale(0.8);
+			transform: translateX(-50%) scale(0.8);
 		}
 	}
 }
