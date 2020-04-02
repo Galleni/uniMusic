@@ -77,7 +77,16 @@
 					"titleNView": false
 				}
 			}
-		}
+		},  {
+				"path": "play",
+				"style": {
+					"navigationBarTitleText": "播放",
+					"navigationStyle": "custom",
+					"app-plus": {
+						"titleNView": false
+					}
+				}
+			}
 		]},
 		{
 			"root": "pages/subpages/account",

@@ -58,3 +58,21 @@ export function apiAlbumDetail(data) {
 		data,
 	})
 }
+
+// 获取歌曲链接
+export function apiSongUrl(data) {
+	return request.request({
+		url: '/song/url',
+		method: 'GET',
+		data,
+	})
+}
+
+// 获取歌曲详情
+export function apiSongDetail(data) {
+	return request.request({
+		url: '/song/detail',
+		method: 'GET',
+		data,
+	})
+}

@@ -1,23 +1,8 @@
 <template>
 	<view class="album-page">
-		<view class="nav-bar">
-			<view class="h300">
-				<view class="bg" :style="'background-image:url('+ (album.backgroundCoverUrl || (album.coverImgUrl + $imgSuffix)) +');top: ' + scrollTop + 'px'"></view>
-				<view class="bg1"></view>
-			</view>
-			<view class="nav-bar-con">
-				<view class="flex-box align">
-					<view class="iconfont" @click="goBack">&#xe616;</view>
-					<view class="title flex-item tac">歌单</view>
-					<view class="iconfont right-icon">
-						<!-- &#xe616; -->
-					</view>
-				</view>
-			</view>
-		</view>
-		<scroll-view scroll-y="true" class="page-content" @scroll="scrollpage">
+		
 			<view class="album-top">
-				<view class="bg" :style="'background-image:url(' + (album.backgroundCoverUrl || (album.coverImgUrl + $imgSuffix)) + ')'"></view>
+				<view class="bg" :style="'background-image:url(' + (album.backgroundCoverUrl || (album.coverImgUrl)) + ')'"></view>
 				<view class="bg1"></view>
 				<view class="album-con">
 					<view class="flex-box">
@@ -69,7 +54,7 @@
 					</view>
 				</view>
 				<view class="list">
-					<view class="item flex-box" v-for="(item, index) in album.tracks" :key="index">
+					<view class="item flex-box" v-for="(item, index) in playList" :key="index" @click="setPlayList">
 						<view class="num" :class="{ on: index < 3 }">{{ index + 1 }}</view>
 						<view class="flex-item">
 							<view class="flex-box con">
@@ -79,37 +64,23 @@
 								</view>
 								<view class="iconfont">&#xe60f;</view>
 							</view>
-							<view class="desc">{{ item.content }}</view>
+							<view class="desc">{{ item.singer }}</view>
 						</view>
 					</view>
 				</view>
 			</view>
-		</scroll-view>
 	</view>
 </template>
 
 <script>
-// 防抖
-function debounce(fn, wait = 10) {    
-	var timeout = null;    
-	return function() {        
-		if(timeout !== null) clearTimeout(timeout);        
-		timeout = setTimeout(fn, wait);    
-	}
-}
 var that = null
+import { mapState, mapMutations } from 'vuex';
 import { apiAlbumDetail } from '@/apis/index.js';
-import uniNavBar from '@/components/uni-nav-bar/uni-nav-bar.vue';
 export default {
-	components: {
-		uniNavBar
-	},
 	data() {
 		return {
 			album: {},
 			playList: [],
-			scrollTop: 20,
-			scrollY: 0,
 		};
 	},
 	created() {
@@ -119,32 +90,39 @@ export default {
 		this.getData(options.id);
 	},
 	methods: {
+		// 设置跟单
+		...mapMutations(['storePlayList']),
+		// 获取数据
 		getData(id) {
 			var par = {
 				id
 			};
 			apiAlbumDetail(par).then(res => {
 				res.playlist.description = res.playlist.description.slice(0, 27)
-				this.album = res.playlist;
-				this.playList = res.privileges;
+				var list = res.playlist;
+				let tracks = res.playlist.tracks.map(song => {
+					let singer = song.ar.map(art => {
+						return art.name
+					})[0]
+					return {
+						name: song.name,
+						id: song.id,
+						singer,
+					}
+				})
+				this.album = Object.freeze(res.playlist);
+				this.playList = Object.freeze(tracks);
 			});
 		},
-		scrollpage (e) {
-			this.scrollY = e.detail.scrollTop
-			this.scroll()
-		},
-		// 设置背景条
-		scroll: debounce(() => {
-			if (that.scrollY < 5) {
-				that.scrollTop = 20
-			} else {
-				if (that.scrollY < 300) {
-					that.scrollTop = - parseInt(that.scrollY) + 20
-				}
-			}
-		}),
 		goBack () {  // 返回上一页
 			uni.navigateBack();
+		},
+		// 设置播放列表
+		setPlayList() {
+			this.storePlayList(this.playList)
+			uni.navigateTo({
+				url: '/pages/subpages/index/play'
+			})
 		}
 	}
 };
@@ -153,17 +131,16 @@ export default {
 <style lang="scss" scoped>
 $bgheight: 688rpx;
 $bgtop: -44px;
-.bg {  // 滤镜模糊
+.bg {
 	position: absolute;
 	top: 0;
 	left: 0;
 	height: 100%;
 	width: 100%;
-	filter: blur(35px);    // 模糊程度
+	filter: blur(35px);
 	background-position: 0 0px;
 	background-repeat: no-repeat;
 	background-size: cover;
-	overflow: hidden;
 }
 .bg1 {
 	position: absolute;
@@ -190,6 +167,9 @@ $bgtop: -44px;
 	.nav-bar-con{
 		position: absolute;
 		top:20px;
+		/* #ifdef H5 */
+		top:0px;
+		/* #endif */
 		width:100%;
 		height:100%;
 		padding:0 30rpx;
@@ -209,6 +189,9 @@ $bgtop: -44px;
 		height: $bgheight;
 		.bg{
 			top: 20px;
+			/* #ifdef H5 */
+			top:0px;
+			/* #endif */
 		}
 	}
 }
@@ -220,7 +203,6 @@ $bgtop: -44px;
 	bottom: 0;
 	/* #ifdef H5 */
 	top:44px;  // h5 无状态栏
-	bottom: 100rpx;
 	/* #endif */
 }
 .album-top {
